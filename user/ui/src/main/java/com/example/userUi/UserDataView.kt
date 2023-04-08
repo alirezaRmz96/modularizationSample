@@ -1,6 +1,6 @@
-package com.example.ui
+package com.example.userUi
 
-import com.example.domain.UserData
+import com.example.userDomain.UserData
 
 
 data class UserDataView(

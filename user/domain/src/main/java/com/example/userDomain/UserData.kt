@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.userDomain
 
 data class UserData(
     val color: String,

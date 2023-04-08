@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.userDomain
 
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

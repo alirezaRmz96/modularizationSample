@@ -1,4 +1,4 @@
-package com.example.data.dataSource.local
+package com.example.userData.dataSource.local
 
 import androidx.room.Dao
 import androidx.room.Insert

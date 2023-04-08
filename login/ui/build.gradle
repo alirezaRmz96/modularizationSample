@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.ui'
+    namespace 'com.example.login.ui'
     compileSdk 33
 
     defaultConfig {

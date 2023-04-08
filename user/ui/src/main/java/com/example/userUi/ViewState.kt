@@ -1,4 +1,4 @@
-package com.example.ui
+package com.example.userUi
 
 sealed interface ViewState {
     object Loading : ViewState

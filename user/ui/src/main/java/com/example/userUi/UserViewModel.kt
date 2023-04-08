@@ -1,11 +1,11 @@
-package com.example.ui
+package com.example.userUi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.NetworkConnectivity
 import com.example.data.ResultWrapper
-import com.example.domain.GetUserLocal
-import com.example.domain.GetUserRemote
+import com.example.userDomain.GetUserLocal
+import com.example.userDomain.GetUserRemote
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
