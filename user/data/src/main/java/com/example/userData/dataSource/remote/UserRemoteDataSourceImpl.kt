@@ -1,4 +1,4 @@
-package com.example.data.dataSource.remote
+package com.example.userData.dataSource.remote
 
 import com.example.data.BaseRemoteDataSource
 import com.google.gson.Gson

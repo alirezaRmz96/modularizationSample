@@ -9,9 +9,9 @@ inline fun <T> Flow<T>.collectOnFragment(
     fragment: Fragment,
     crossinline onCollect: (T) -> Unit
 ) {
-    fragment.lifecycleScope.launchWhenStarted {
-        this@collectOnFragment.collectLatest {
-            onCollect(it)
-        }
-    }
+//    fragment.lifecycleScope.launchWhenStarted {
+//        this@collectOnFragment.collectLatest {
+//            onCollect(it)
+//        }
+//    }
 }

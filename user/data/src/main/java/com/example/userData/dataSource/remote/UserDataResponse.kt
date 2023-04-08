@@ -1,6 +1,6 @@
-package com.example.data.dataSource.remote
+package com.example.userData.dataSource.remote
 
-import com.example.data.dataSource.local.UserDataEntity
+import com.example.userData.dataSource.local.UserDataEntity
 
 data class UserDataResponse(
     val color: String,

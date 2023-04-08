@@ -1,4 +1,4 @@
-package com.example.data.dataSource.remote
+package com.example.userData.dataSource.remote
 
 interface UserRemoteDataSource {
     suspend fun getUser(): List<UserResponse>

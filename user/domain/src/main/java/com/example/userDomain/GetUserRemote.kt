@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.userDomain
 
 import com.example.data.ResultWrapper
 import com.example.data.safeData
