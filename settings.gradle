@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Modularization"
 include ':app'
+include ':user:domain'
+include ':user:data'
+include ':user:ui'
+include ':login:data'
+include ':login:domain'
+include ':login:ui'
