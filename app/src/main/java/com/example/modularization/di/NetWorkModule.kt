@@ -1,5 +1,6 @@
 package com.example.modularization.di
 
+import com.example.modularization.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -19,7 +20,7 @@ object NetWorkModule {
         gson: Gson
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl("BuildConfig.BASE_URL")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

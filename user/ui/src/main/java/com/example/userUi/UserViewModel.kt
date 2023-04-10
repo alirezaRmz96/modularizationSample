@@ -2,16 +2,16 @@ package com.example.userUi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.Error
 import com.example.data.NetworkConnectivity
 import com.example.data.ResultWrapper
 import com.example.userDomain.GetUserLocal
 import com.example.userDomain.GetUserRemote
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.data.Error
 
 
 class UserViewModel @Inject constructor(
@@ -24,13 +24,15 @@ class UserViewModel @Inject constructor(
     val userData = _userData.asStateFlow()
 
     private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
-    val viewState = _userData.asStateFlow()
+    val viewState = _viewState.asStateFlow()
+
+    private var job: Job? = null
 
     init {
         getData()
     }
 
-    private fun getData() = viewModelScope.launch {
+    private fun getData() = viewModelScope.launch(Dispatchers.IO) {
         if (networkConnectivity.getNetworkConnection()) {
             when (val response = getUserRemote()) {
                 is ResultWrapper.Failure -> {
@@ -49,11 +51,11 @@ class UserViewModel @Inject constructor(
                     _viewState.emit(ViewState.Loading)
 
                 is ResultWrapper.Success -> {
-                    getUserLocal().map { userData ->
+                    job = getUserLocal().onEach { userData ->
                         _userData.emit(
                             userData.map { it.toUserDataView() }
                         )
-                    }
+                    }.launchIn(this)
                 }
             }
         } else {

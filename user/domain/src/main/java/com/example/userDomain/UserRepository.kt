@@ -1,6 +1,5 @@
 package com.example.userDomain
 
-import com.example.userDomain.UserData
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

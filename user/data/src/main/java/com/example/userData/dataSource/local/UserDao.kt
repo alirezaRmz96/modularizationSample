@@ -1,15 +1,13 @@
 package com.example.userData.dataSource.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: List<UserDataEntity>)
 
-    @Query("SELECT * FROM Users")
+    @Query("SELECT * FROM users")
     fun getUsers(): Flow<List<UserDataEntity>>
 }

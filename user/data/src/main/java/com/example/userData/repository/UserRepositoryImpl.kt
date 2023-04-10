@@ -1,11 +1,11 @@
 package com.example.userData.repository
 
+import android.util.Log
 import com.example.userData.dataSource.local.UserLocalDataSource
 import com.example.userData.dataSource.remote.UserRemoteDataSource
 import com.example.userDomain.UserData
 import com.example.userDomain.UserRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -13,9 +13,8 @@ class UserRepositoryImpl @Inject constructor(
     private val localDataSource: UserLocalDataSource,
 ) : UserRepository {
     override suspend fun getUserRemote() {
-        remoteDataSource.getUser().map { userResponse ->
-            localDataSource.insertUsers(
-                userResponse.userData.map { it.toUserDataEntity() })
+        remoteDataSource.getUser()?.let {userDataResponses ->
+            localDataSource.insertUsers(userDataResponses.map { it.toUserDataEntity() })
         }
     }
 

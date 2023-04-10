@@ -1,12 +1,11 @@
 package com.example.userData.dataSource.remote
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UserResponse(
-    @SerializedName("data")
-    val userData: List<UserDataResponse>,
-    val page: Int,
-    val per_page: Int,
-    val total: Int,
-    val total_pages: Int
+    @field:Json(name = "data") val userData: List<UserDataResponse>?,
+    @field:Json(name = "total") val total: Int?,
+    @field:Json(name = "total_pages") val totalPages: Int?,
 )
