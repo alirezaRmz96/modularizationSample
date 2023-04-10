@@ -6,6 +6,6 @@ import com.example.userData.dataSource.local.UserDao
 import com.example.userData.dataSource.local.UserDataEntity
 
 @Database(entities = [UserDataEntity::class], version = 1)
-abstract class AppDatabase:RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }

@@ -1,5 +1,6 @@
 package com.example.modularization.di
 
+import com.example.userUi.UserInjector
 import dagger.Component
 
 @UserScope
@@ -9,7 +10,7 @@ import dagger.Component
         DataBaseComponent::class
     ]
 )
-interface UserComponent {
+interface UserComponent : UserInjector {
 
     @Component.Factory
     interface Factory {

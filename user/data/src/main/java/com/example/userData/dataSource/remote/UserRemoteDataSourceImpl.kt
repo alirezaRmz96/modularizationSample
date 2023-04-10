@@ -8,7 +8,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
     private val service: UserService,
     gson: Gson,
 ) : BaseRemoteDataSource(gson = gson), UserRemoteDataSource {
-    override suspend fun getUser(): List<UserResponse> {
-        return service.getUser(page = 1).bodyOrThrow()
+    override suspend fun getUser(): List<UserDataResponse>? {
+        return service.getUser(page = 1).bodyOrThrow().userData
     }
 }

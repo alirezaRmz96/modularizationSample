@@ -9,5 +9,5 @@ interface UserService {
     suspend fun getUser(
         @Query("page")
         page: Int = 1,
-    ): Response<List<UserResponse>>
+    ): Response<UserResponse>
 }
