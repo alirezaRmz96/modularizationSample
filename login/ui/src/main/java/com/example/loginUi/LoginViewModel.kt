@@ -1,64 +1,58 @@
-package com.example.userUi
+package com.example.loginUi
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.Error
 import com.example.data.NetworkConnectivity
 import com.example.data.ResultWrapper
-import com.example.userDomain.GetUserLocal
-import com.example.userDomain.GetUserRemote
+import com.example.loginDomain.GetLoginUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-class UserViewModel @Inject constructor(
-    private val getUserLocal: GetUserLocal,
-    private val getUserRemote: GetUserRemote,
+class LoginViewModel @Inject constructor(
+    private val getLoginUseCase: GetLoginUseCase,
     private val networkConnectivity: NetworkConnectivity,
 ) : ViewModel() {
 
-    private val _userData = MutableStateFlow<List<UserDataView>>(emptyList())
-    val userData = _userData.asStateFlow()
+    val email = MutableStateFlow("")
+    val password = MutableStateFlow("")
 
     private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
     val viewState = _viewState.asStateFlow()
 
-    private var job: Job? = null
-
-    init {
-        getData()
-    }
-
-    private fun getData() = viewModelScope.launch(Dispatchers.IO) {
+    suspend fun loginUser() = viewModelScope.launch(Dispatchers.IO) {
         if (networkConnectivity.getNetworkConnection()) {
-            when (val response = getUserRemote()) {
+
+            val loginView = LoginView(
+                email = email.value,
+                password = password.value
+            )
+            when (val response = getLoginUseCase(login = loginView.toLogin())) {
                 is ResultWrapper.Failure -> {
                     when (val error = response.error) {
                         is Error.AppError -> {
                             _viewState.emit(ViewState.Error(error.message))
+                            Log.d("messi one", "AppError: ${error.message}")
                         }
                         is Error.NetworkError -> {
                             _viewState.emit(ViewState.Error(error.message))
+                            Log.d("messi one", "NetworkError: ${error.message}")
                         }
                         // Doesn't work here
                         else -> {}
                     }
-                }
-                is ResultWrapper.Loading ->
-                    _viewState.emit(ViewState.Loading)
 
+                }
+                ResultWrapper.Loading -> {
+                    _viewState.emit(ViewState.Loading)
+                }
                 is ResultWrapper.Success -> {
-                    job = getUserLocal().onEach { userData ->
-                        _userData.emit(
-                            userData.map { it.toUserDataView() }
-                        )
-                    }.launchIn(this)
+                    _viewState.emit(ViewState.Success(response.resultData.token))
+                    Log.d("messi one", "Success: ${response.resultData.token}")
                 }
             }
         } else {

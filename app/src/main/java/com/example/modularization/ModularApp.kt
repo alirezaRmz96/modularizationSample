@@ -1,6 +1,7 @@
 package com.example.modularization
 
 import android.app.Application
+import com.example.loginUi.LoginInjector
 import com.example.modularization.di.*
 import com.example.userUi.UserFragment
 import com.example.userUi.UserInjector
@@ -21,6 +22,12 @@ class ModularApp : Application(), UserInjector {
             dataBaseComponent = databaseComponent
         ).inject(fragment)
     }
+
+//    override fun inject(fragment: LoginFragment) {
+//        DaggerLoginComponent.factory().create(
+//            netWorkComponent = netWorkComponent
+//        ).inject(fragment)
+//    }
 
 
 }
