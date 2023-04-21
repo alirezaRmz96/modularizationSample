@@ -24,7 +24,11 @@ class LoginViewModel @Inject constructor(
     private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
     val viewState = _viewState.asStateFlow()
 
-    suspend fun loginUser() = viewModelScope.launch(Dispatchers.IO) {
+    init {
+        loginUser()
+    }
+
+    private fun loginUser() = viewModelScope.launch(Dispatchers.IO) {
         if (networkConnectivity.getNetworkConnection()) {
 
             val loginView = LoginView(
