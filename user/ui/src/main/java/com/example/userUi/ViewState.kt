@@ -1,6 +1,7 @@
 package com.example.userUi
 
-sealed interface ViewState {
-    object Loading : ViewState
-    data class Error(val message: String) : ViewState
+sealed class ViewState {
+    object Loading : ViewState()
+    data class Error(val message: String) : ViewState()
+    data class Success(val data : Any):ViewState()
 }

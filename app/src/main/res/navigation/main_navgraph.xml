@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/user_navgraph">
+    app:startDestination="@id/login_navgraph">
 
+    <include app:graph="@navigation/login_navgraph" />
     <include app:graph="@navigation/user_navgraph" />
 
 </navigation>

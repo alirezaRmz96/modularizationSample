@@ -1,4 +1,4 @@
-package com.example.modularization.di
+package com.example.modularization.di.user
 
 import com.example.modularization.AppDatabase
 import com.example.userData.dataSource.local.UserDao

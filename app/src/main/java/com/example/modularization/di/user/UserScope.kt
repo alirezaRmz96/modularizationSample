@@ -1,4 +1,4 @@
-package com.example.modularization.di
+package com.example.modularization.di.user
 
 import javax.inject.Scope
 

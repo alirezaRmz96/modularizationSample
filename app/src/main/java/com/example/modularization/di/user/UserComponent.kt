@@ -1,5 +1,7 @@
-package com.example.modularization.di
+package com.example.modularization.di.user
 
+import com.example.modularization.di.DataBaseComponent
+import com.example.modularization.di.NetWorkComponent
 import com.example.userUi.UserInjector
 import dagger.Component
 
