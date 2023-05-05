@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:startDestination="@id/login_navgraph">
 
-    <include app:graph="@navigation/user_navgraph" />
     <include app:graph="@navigation/login_navgraph" />
+    <include app:graph="@navigation/user_navgraph" />
 
 </navigation>
