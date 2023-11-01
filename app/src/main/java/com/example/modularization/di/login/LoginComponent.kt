@@ -1,8 +1,9 @@
+/*
 package com.example.modularization.di.login
 
 import com.example.loginUi.LoginInjector
-import com.example.modularization.di.DataBaseComponent
-import com.example.modularization.di.NetWorkComponent
+import com.example.common.dagger.db.DataBaseComponent
+import com.example.common.dagger.NetWorkComponent
 import dagger.Component
 
 @LoginScope
@@ -21,4 +22,4 @@ interface LoginComponent : LoginInjector {
             dataBaseComponent: DataBaseComponent,
         ): LoginComponent
     }
-}
+}*/

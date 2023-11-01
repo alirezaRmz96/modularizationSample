@@ -2,6 +2,7 @@ package com.example.data
 
 import com.google.gson.Gson
 import retrofit2.Response
+import javax.inject.Inject
 
 abstract class BaseRemoteDataSource(
     private val gson: Gson,

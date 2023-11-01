@@ -14,26 +14,26 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 
-@Module
-abstract class UserModule {
-
-    companion object {
-        @Provides
-        fun provideUserService(retrofit: Retrofit): UserService {
-            return retrofit.create(UserService::class.java)
-        }
-        @Provides
-        fun provideUserDao(appDatabase: AppDatabase):UserDao{
-            return appDatabase.userDao()
-        }
-    }
-
-    @Binds
-    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
-
-    @Binds
-    abstract fun bindUserLocalDataSource(impl: UserLocalDataSourceImpl): UserLocalDataSource
-
-    @Binds
-    abstract fun bindUserRemoteDataSource(impl: UserRemoteDataSourceImpl): UserRemoteDataSource
-}
+//@Module
+//abstract class UserModule {
+//
+//    companion object {
+//        @Provides
+//        fun provideUserService(retrofit: Retrofit): UserService {
+//            return retrofit.create(UserService::class.java)
+//        }
+//        @Provides
+//        fun provideUserDao(appDatabase: AppDatabase):UserDao{
+//            return appDatabase.userDao()
+//        }
+//    }
+//
+//    @Binds
+//    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
+//
+//    @Binds
+//    abstract fun bindUserLocalDataSource(impl: UserLocalDataSourceImpl): UserLocalDataSource
+//
+//    @Binds
+//    abstract fun bindUserRemoteDataSource(impl: UserRemoteDataSourceImpl): UserRemoteDataSource
+//}

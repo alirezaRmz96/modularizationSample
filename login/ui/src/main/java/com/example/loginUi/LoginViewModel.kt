@@ -8,8 +8,11 @@ import com.example.data.NetworkConnectivity
 import com.example.data.ResultWrapper
 import com.example.loginDomain.GetLoginUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.internal.ChannelFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,8 +24,8 @@ class LoginViewModel @Inject constructor(
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
 
-    private val _viewState = MutableStateFlow<ViewState>(ViewState.UnInitialize)
-    val viewState = _viewState.asStateFlow()
+    private val _viewState = Channel<ViewState>()
+    val viewState = _viewState.consumeAsFlow()
 
     suspend fun loginUser() = viewModelScope.launch(Dispatchers.IO) {
         if (networkConnectivity.getNetworkConnection()) {
@@ -35,11 +38,11 @@ class LoginViewModel @Inject constructor(
                 is ResultWrapper.Failure -> {
                     when (val error = response.error) {
                         is Error.AppError -> {
-                            _viewState.emit(ViewState.Error(error.message))
+                            _viewState.send(ViewState.Error(error.message))
                             Log.d("messi one", "AppError: ${error.message}")
                         }
                         is Error.NetworkError -> {
-                            _viewState.emit(ViewState.Error(error.message))
+                            _viewState.send(ViewState.Error(error.message))
                             Log.d("messi one", "NetworkError: ${error.message}")
                         }
                         // Doesn't work here
@@ -49,15 +52,15 @@ class LoginViewModel @Inject constructor(
                 }
                 ResultWrapper.Loading -> {
                     Log.d("messi one", "Loading: ")
-                    _viewState.emit(ViewState.Loading)
+                    _viewState.send(ViewState.Loading)
                 }
                 is ResultWrapper.Success -> {
-                    _viewState.emit(ViewState.Success(response.resultData.token))
+                    _viewState.send(ViewState.Success(response.resultData.token))
                     Log.d("messi one", "Success: ${response.resultData.token}")
                 }
             }
         } else {
-            _viewState.emit(ViewState.Error("Doesn't have network"))
+            _viewState.send(ViewState.Error("Doesn't have network"))
         }
     }
 }

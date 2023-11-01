@@ -25,7 +25,7 @@ class LoginFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as LoginInjector).inject(this)
+//        (requireActivity().application as LoginInjector).inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

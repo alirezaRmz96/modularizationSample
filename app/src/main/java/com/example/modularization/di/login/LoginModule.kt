@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 
+/*
 @Module
 abstract class LoginModule {
     @Binds
@@ -25,4 +26,4 @@ abstract class LoginModule {
         }
     }
 
-}
+}*/
