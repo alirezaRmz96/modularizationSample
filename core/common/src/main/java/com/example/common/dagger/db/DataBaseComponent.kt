@@ -1,20 +1,21 @@
 package com.example.common.dagger.db
 
-import android.content.Context
-import dagger.BindsInstance
+import com.example.data.NetworkConnectivity
+import com.example.data.dagger.ContextComponent
 import dagger.Component
 
 @DataBaseScope
-@Component(modules = [DataBaseModule::class])
+@Component(modules = [DataBaseModule::class], dependencies = [ContextComponent::class])
 interface DataBaseComponent {
 
+
     fun appDataBase(): AppDatabase
-    fun context(): Context
+    fun network(): NetworkConnectivity
 
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance applicationContext: Context
+            contextComponent: ContextComponent
         ): DataBaseComponent
     }
 }

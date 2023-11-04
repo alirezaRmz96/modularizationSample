@@ -12,11 +12,6 @@ import retrofit2.Retrofit
 
 @Module
 abstract class LoginModule {
-    @Binds
-    abstract fun bindLoginRepository(impl: LoginRepositoryImpl): LoginRepository
-
-    @Binds
-    abstract fun bindLoginRemoteDataSource(impl: LoginRemoteDataSourceImpl): LoginRemoteDataSource
 
     companion object {
         @Provides
@@ -24,5 +19,10 @@ abstract class LoginModule {
             return retrofit.create(LoginService::class.java)
         }
     }
+    @Binds
+    abstract fun bindLoginRepository(impl: LoginRepositoryImpl): LoginRepository
+
+    @Binds
+    abstract fun bindLoginRemoteDataSource(impl: LoginRemoteDataSourceImpl): LoginRemoteDataSource
 
 }

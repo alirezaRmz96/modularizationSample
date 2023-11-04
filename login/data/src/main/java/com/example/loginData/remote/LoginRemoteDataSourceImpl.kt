@@ -7,8 +7,8 @@ import javax.inject.Inject
 class LoginRemoteDataSourceImpl @Inject constructor(
     private val loginService: LoginService,
     gson: Gson
-) : BaseRemoteDataSource(gson = gson), LoginRemoteDataSource{
-    override suspend fun getLogin(loginRequest: LoginRequest) :LoginPropertyResponse{
+) : BaseRemoteDataSource(gson = gson), LoginRemoteDataSource {
+    override suspend fun getLogin(loginRequest: LoginRequest): LoginPropertyResponse {
         return loginService.login(loginRequest).bodyOrThrow()
     }
 

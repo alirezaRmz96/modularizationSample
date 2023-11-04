@@ -22,9 +22,4 @@ interface LoginComponentUi : LoginInjector {
         ): LoginComponentUi
     }
 
-    companion object {
-        /*fun builder():LoginComponentUi{
-
-        }*/
-    }
 }

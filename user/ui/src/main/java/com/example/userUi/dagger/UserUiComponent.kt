@@ -13,9 +13,6 @@ import dagger.Component
 )
 interface UserUiComponent : UserInjector {
 
-
-
-
     @Component.Factory
     interface Factory {
         fun create(
