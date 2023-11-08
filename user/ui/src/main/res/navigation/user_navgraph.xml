@@ -10,4 +10,6 @@
         android:name="com.example.userUi.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+
+    <deepLink app:uri="modular-app://user:ui/userFragment"/>
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.modularization.di
+package com.example.modularization.di.database
 
 import javax.inject.Scope
 

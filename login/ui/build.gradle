@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace 'com.example.login.ui'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -36,12 +36,13 @@ android {
 
 dependencies {
     implementation project(path: ':core:common')
+    implementation project(path: ':core:utils')
+    implementation project(path: ':login:domain')
+    implementation project(path: ':core:data')
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
-    implementation project(path: ':login:domain')
-    implementation project(path: ':core:data')
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     testImplementation 'junit:junit:4.13.2'

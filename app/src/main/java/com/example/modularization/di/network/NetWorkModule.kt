@@ -1,4 +1,4 @@
-package com.example.modularization.di
+package com.example.modularization.di.network
 
 import com.example.modularization.BuildConfig
 import com.google.gson.Gson

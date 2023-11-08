@@ -1,10 +1,9 @@
-package com.example.modularization.di
+package com.example.modularization.di.database
 
 import android.content.Context
 import androidx.room.Room
 import com.example.modularization.AppDatabase
 import com.example.modularization.ModularApp
-import dagger.BindsInstance
 import dagger.Module
 import dagger.Provides
 
@@ -24,9 +23,4 @@ object DataBaseModule {
             .build()
     }
 
-
-    @Provides
-    fun provideContext(modularApp: ModularApp): Context {
-        return modularApp.applicationContext
-    }
 }

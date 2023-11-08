@@ -19,8 +19,8 @@ class LoginViewModel @Inject constructor(
     private val networkConnectivity: NetworkConnectivity,
 ) : ViewModel() {
 
-    val email = MutableStateFlow("")
-    val password = MutableStateFlow("")
+    val email = MutableStateFlow("eve.holt@reqres.in")
+    val password = MutableStateFlow("cityslicka")
 
     private val _viewState = Channel<ViewState>()
     val viewState = _viewState.consumeAsFlow()

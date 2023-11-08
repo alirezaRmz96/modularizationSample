@@ -2,6 +2,7 @@ package com.example.loginUi
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.common.NavigationAction
+import com.example.common.NavigationActions
 import com.example.common.collectOnFragment
+import com.example.common.safeNavigate
+import com.example.login.ui.R
 import com.example.login.ui.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,11 +30,12 @@ class LoginFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as LoginInjector).inject(this)
+        provideInjector().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -76,10 +82,20 @@ class LoginFragment : Fragment() {
                         "Login Correctly",
                         Toast.LENGTH_SHORT
                     ).show()
+                    safeNavigate(
+                        navigationAction = NavigationActions.navigateToUserFragment,
+                        id = R.id.loginFragment
+                    )
                 }
 
                 else -> {}
             }
         }
+    }
+
+
+    override fun onDestroy() {
+        garbageInjector()
+        super.onDestroy()
     }
 }
