@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.navArgument
+import com.example.common.NavArguments
 import com.example.common.collectOnFragment
 import com.example.user.ui.databinding.FragmentUserBinding
 import javax.inject.Inject
@@ -23,9 +26,14 @@ class UserFragment : Fragment() {
     private val viewModel by viewModels<UserViewModel> { factory }
     private lateinit var binding: FragmentUserBinding
 
+    private val userName : String? by lazy {
+        arguments?.getString(NavArguments.userArgs)
+    }
+
+
     override fun onAttach(context: Context) {
+        provideInjector().inject(this)
         super.onAttach(context)
-        provideInjector().inject(this, viewLifecycleOwner)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +50,9 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d("alireza", "onViewCreated: $userName")
+
         viewModel.userData.collectOnFragment(this) {
 
         }

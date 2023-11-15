@@ -6,7 +6,7 @@ import com.example.core.utils.di.ModularFeatureComponentKey
 
 fun Fragment.provideInjector(): UserInjector {
     val component = (activity?.application as? ModularComponentProvider)?.provideComponent(
-        ModularFeatureComponentKey.User
+        ModularFeatureComponentKey.User,
     ) ?: throw IllegalStateException("Could Not Find User Component")
 
     return (component as? UserInjector)
