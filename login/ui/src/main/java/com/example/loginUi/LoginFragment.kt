@@ -2,7 +2,6 @@ package com.example.loginUi
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.common.collectOnFragment
 import com.example.common.NavRoutes
+import com.example.common.collectOnFragment
+import com.example.common.safeNavigate
 import com.example.login.ui.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -94,7 +93,7 @@ class LoginFragment : Fragment() {
         }
     }
     private fun navigateToLogin(userName: String) {
-        findNavController().navigate("${NavRoutes.userUi}/$userName")
+        safeNavigate("${NavRoutes.userUi}/$userName", routeName = NavRoutes.loginUi)
     }
 }
 
