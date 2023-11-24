@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.common.NavRoutes
 import com.example.common.collectOnFragment
+import com.example.common.safeNavigate
 import com.example.login.ui.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,11 +27,12 @@ class LoginFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as LoginInjector).inject(this)
+        provideInjector().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -53,6 +56,7 @@ class LoginFragment : Fragment() {
 
     private fun initValue() {
         binding.login.setOnClickListener {
+            binding.pbLogin.visibility = View.VISIBLE
             lifecycleScope.launch {
                 viewModel.loginUser()
             }
@@ -76,10 +80,22 @@ class LoginFragment : Fragment() {
                         "Login Correctly",
                         Toast.LENGTH_SHORT
                     ).show()
+                    /*safeNavigate(
+                        navigationAction = NavigationActions.navigateToUserFragment,
+                        id = R.id.loginFragment
+                    )*/
+
+                    navigateToLogin(viewModel.email.value)
                 }
 
                 else -> {}
             }
         }
     }
+    private fun navigateToLogin(userName: String) {
+        safeNavigate("${NavRoutes.userUi}/$userName", routeName = NavRoutes.loginUi)
+    }
 }
+
+
+

@@ -9,6 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.navArgument
+import com.example.common.NavArguments
 import com.example.common.collectOnFragment
 import com.example.user.ui.databinding.FragmentUserBinding
 import javax.inject.Inject
@@ -22,9 +26,14 @@ class UserFragment : Fragment() {
     private val viewModel by viewModels<UserViewModel> { factory }
     private lateinit var binding: FragmentUserBinding
 
+    private val userName : String? by lazy {
+        arguments?.getString(NavArguments.userArgs)
+    }
+
+
     override fun onAttach(context: Context) {
+        provideInjector().inject(this)
         super.onAttach(context)
-        (requireActivity().application as UserInjector).inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,17 +44,20 @@ class UserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentUserBinding.inflate(layoutInflater,container,false)
+        binding = FragmentUserBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d("alireza", "onViewCreated: $userName")
+
         viewModel.userData.collectOnFragment(this) {
 
         }
         viewModel.viewState.collectOnFragment(this) {
-            when(it){
+            when (it) {
                 is ViewState.Error -> Log.d("messi", "Error: ${it.message}")
                 ViewState.Loading -> Log.d("messi", "Loading ")
                 is ViewState.Success -> {

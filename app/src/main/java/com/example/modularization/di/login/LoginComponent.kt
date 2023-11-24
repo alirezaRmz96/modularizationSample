@@ -1,8 +1,9 @@
 package com.example.modularization.di.login
 
+import com.example.core.utils.di.ModularComponent
 import com.example.loginUi.LoginInjector
-import com.example.modularization.di.DataBaseComponent
-import com.example.modularization.di.NetWorkComponent
+import com.example.modularization.di.database.DataBaseComponent
+import com.example.modularization.di.network.NetWorkComponent
 import dagger.Component
 
 @LoginScope
@@ -12,7 +13,7 @@ import dagger.Component
         LoginViewModelModule::class
     ], dependencies = [NetWorkComponent::class, DataBaseComponent::class]
 )
-interface LoginComponent : LoginInjector {
+interface LoginComponent : ModularComponent, LoginInjector {
 
     @Component.Factory
     interface Factory {
@@ -20,5 +21,16 @@ interface LoginComponent : LoginInjector {
             netWorkComponent: NetWorkComponent,
             dataBaseComponent: DataBaseComponent,
         ): LoginComponent
+    }
+
+    companion object {
+        fun create(
+            netWorkComponent: NetWorkComponent,
+            dataBaseComponent: DataBaseComponent
+        ): LoginComponent {
+            return DaggerLoginComponent.factory().create(
+                netWorkComponent, dataBaseComponent
+            )
+        }
     }
 }

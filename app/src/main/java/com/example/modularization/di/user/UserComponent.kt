@@ -1,7 +1,8 @@
 package com.example.modularization.di.user
 
-import com.example.modularization.di.DataBaseComponent
-import com.example.modularization.di.NetWorkComponent
+import com.example.core.utils.di.ModularComponent
+import com.example.modularization.di.database.DataBaseComponent
+import com.example.modularization.di.network.NetWorkComponent
 import com.example.userUi.UserInjector
 import dagger.Component
 
@@ -12,7 +13,7 @@ import dagger.Component
         DataBaseComponent::class
     ]
 )
-interface UserComponent : UserInjector {
+interface UserComponent : ModularComponent, UserInjector {
 
     @Component.Factory
     interface Factory {
@@ -20,5 +21,16 @@ interface UserComponent : UserInjector {
             netWorkComponent: NetWorkComponent,
             dataBaseComponent: DataBaseComponent,
         ): UserComponent
+    }
+
+    companion object {
+        fun create(
+            netWorkComponent: NetWorkComponent,
+            dataBaseComponent: DataBaseComponent
+        ): UserComponent {
+            return DaggerUserComponent.factory().create(
+                netWorkComponent, dataBaseComponent
+            )
+        }
     }
 }

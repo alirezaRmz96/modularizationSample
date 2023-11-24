@@ -9,10 +9,10 @@ import com.example.userDomain.GetUserLocal
 import com.example.userDomain.GetUserRemote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -28,8 +28,8 @@ class UserViewModel @Inject constructor(
     private val _userData = MutableStateFlow<List<UserDataView>>(emptyList())
     val userData = _userData.asStateFlow()
 
-    private val _viewState = Channel<ViewState>()
-    val viewState = _viewState.consumeAsFlow()
+    private val _viewState = MutableSharedFlow<ViewState>()
+    val viewState = _viewState.asSharedFlow()
 
     private var job: Job? = null
 
@@ -43,17 +43,17 @@ class UserViewModel @Inject constructor(
                 is ResultWrapper.Failure -> {
                     when (val error = response.error) {
                         is Error.AppError -> {
-                            _viewState.send(ViewState.Error(error.message))
+                            _viewState.emit(ViewState.Error(error.message))
                         }
                         is Error.NetworkError -> {
-                            _viewState.send(ViewState.Error(error.message))
+                            _viewState.emit(ViewState.Error(error.message))
                         }
                         // Doesn't work here
                         else -> {}
                     }
                 }
                 is ResultWrapper.Loading ->
-                    _viewState.send(ViewState.Loading)
+                    _viewState.emit(ViewState.Loading)
 
                 is ResultWrapper.Success -> {
                     job = getUserLocal().onEach { userData ->
@@ -64,7 +64,7 @@ class UserViewModel @Inject constructor(
                 }
             }
         } else {
-            _viewState.send(ViewState.Error("Doesn't have network"))
+            _viewState.emit(ViewState.Error("Doesn't have network"))
         }
     }
 }
