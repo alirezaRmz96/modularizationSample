@@ -1,6 +1,7 @@
 package com.example.modularization.di.database
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.core.utils.di.ModularComponent
 import com.example.modularization.AppDatabase
 import com.example.modularization.di.context.ContextComponent
@@ -15,7 +16,7 @@ interface DataBaseComponent : ModularComponent {
 
     fun appDataBase(): AppDatabase
     fun context(): Context
-
+    fun sharedPreferences(): SharedPreferences
     @Component.Factory
     interface Factory {
         fun create(

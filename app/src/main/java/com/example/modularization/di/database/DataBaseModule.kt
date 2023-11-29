@@ -1,9 +1,9 @@
 package com.example.modularization.di.database
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.modularization.AppDatabase
-import com.example.modularization.ModularApp
 import dagger.Module
 import dagger.Provides
 
@@ -22,5 +22,11 @@ object DataBaseModule {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    @Provides
+    fun provideSharedPref(
+        context: Context
+    ): SharedPreferences = context.getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+
 
 }
