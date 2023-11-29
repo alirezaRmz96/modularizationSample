@@ -2,6 +2,7 @@ package com.example.userUi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.common.CorePreference
 import com.example.data.Error
 import com.example.data.NetworkConnectivity
 import com.example.data.ResultWrapper
@@ -23,6 +24,7 @@ class UserViewModel @Inject constructor(
     private val getUserLocal: GetUserLocal,
     private val getUserRemote: GetUserRemote,
     private val networkConnectivity: NetworkConnectivity,
+    private val corePreference: CorePreference
 ) : ViewModel() {
 
     private val _userData = MutableStateFlow<List<UserDataView>>(emptyList())
@@ -31,10 +33,14 @@ class UserViewModel @Inject constructor(
     private val _viewState = MutableSharedFlow<ViewState>()
     val viewState = _viewState.asSharedFlow()
 
+    private val _userToken = MutableStateFlow("")
+    val userToken = _userToken.asStateFlow()
+
     private var job: Job? = null
 
     init {
         getData()
+        saveData()
     }
 
     private fun getData() = viewModelScope.launch(Dispatchers.IO) {
@@ -66,5 +72,11 @@ class UserViewModel @Inject constructor(
         } else {
             _viewState.emit(ViewState.Error("Doesn't have network"))
         }
+    }
+
+    private fun saveData() = viewModelScope.launch {
+        _userToken.emit(
+            corePreference.token + " ${corePreference.theme}"
+        )
     }
 }
