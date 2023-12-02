@@ -2,6 +2,7 @@ package com.example.loginUi
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.common.NavRoutes
 import com.example.common.collectOnFragment
 import com.example.common.safeNavigate
+import com.example.core.utils.di.ActionEntity
 import com.example.login.ui.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +26,8 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel by viewModels<LoginViewModel> { factory }
+
+    private var likeOrDisLike: Boolean = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,6 +65,19 @@ class LoginFragment : Fragment() {
                 viewModel.loginUser()
             }
         }
+
+        binding.command.setOnClickListener {
+            likeOrDisLike = !likeOrDisLike
+            val response = findCommandExecute(
+                ActionEntity(
+                    id = "firstId",
+                    categoryId = "firstCategoryId",
+                    likeOrDisLike = likeOrDisLike
+                )
+            )
+            Log.d("messi", "initValue: $response")
+        }
+
     }
 
     private fun initCollections() {
@@ -92,6 +109,7 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
     private fun navigateToLogin(userName: String) {
         safeNavigate("${NavRoutes.userUi}/$userName", routeName = NavRoutes.loginUi)
     }
