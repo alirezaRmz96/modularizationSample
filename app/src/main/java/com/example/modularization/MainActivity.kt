@@ -1,6 +1,7 @@
 package com.example.modularization
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavType
 import androidx.navigation.createGraph
@@ -8,10 +9,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import com.example.common.NavArguments
 import com.example.common.NavRoutes
+import com.example.core.utils.di.BookmarkActionCommand
+import com.example.core.utils.di.Command
+import com.example.core.utils.di.CommandExecute
 import com.example.loginUi.LoginFragment
 import com.example.userUi.UserFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CommandExecute {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,6 +40,19 @@ class MainActivity : AppCompatActivity() {
                     defaultValue = "fuckkkkkkkkkk"
                     nullable = true
                 }
+            }
+        }
+    }
+
+    override fun execute(command: Command): Boolean {
+        return when (command) {
+            is BookmarkActionCommand -> {
+                Log.d("messi", "execute: ${command.action.categoryId}")
+                command.action.likeOrDisLike
+            }
+
+            else -> {
+                return false
             }
         }
     }
